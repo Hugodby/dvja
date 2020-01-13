@@ -12,6 +12,11 @@ pipeline {
         sh "mvn clean package"
       }
     }
+    stage('Check dependencies') {
+      steps {
+        dependencyCheck additionalArguments: '', odcInstallation: 'Dependency-Check'
+        }
+      }
     stage('Publish to S3') {
       steps {
         sh "aws s3 cp /var/lib/jenkins/workspace/ako/target/dvja-1.0-SNAPSHOT.war s3://ako-ci-secure-2-buildartifacts-zoctfk1orzjm/dvja-1.0-SNAPSHOT.war"
